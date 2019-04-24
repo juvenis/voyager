@@ -112,7 +112,8 @@ if (starts_with(Auth::user()->avatar, 'http://') || starts_with(Auth::user()->av
 
 
 <script type="text/javascript" src="{{ voyager_asset('js/app.js') }}"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <script>
     @if(Session::has('alerts'))

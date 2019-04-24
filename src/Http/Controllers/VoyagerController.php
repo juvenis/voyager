@@ -2,6 +2,7 @@
 
 namespace TCG\Voyager\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -35,13 +36,15 @@ class VoyagerController extends Controller
 
         $filename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
         $filename_counter = 1;
-
-        // Make sure the filename does not exist, if it does make sure to add a number to the end 1, 2, 3, etc...
-        while (Storage::disk(config('voyager.storage.disk'))->exists($path.$filename.'.'.$file->getClientOriginalExtension())) {
-            $filename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension()).(string) ($filename_counter++);
+		
+		$filenamex=Str::slug($filename);
+		
+        while (Storage::disk(config('voyager.storage.disk'))->exists($path.$filenamex.'.'.$file->getClientOriginalExtension())) {
+            $filenamex = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension()).(string) ($filename_counter++);
         }
 
-        $fullPath = $path.$filename.'.'.$file->getClientOriginalExtension();
+		
+        $fullPath = $path.$filenamex.'.'.$file->getClientOriginalExtension();
 
         $ext = $file->guessClientExtension();
 
@@ -51,7 +54,7 @@ class VoyagerController extends Controller
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
-                ->encode($file->getClientOriginalExtension(), 75);
+                ->encode($file->getClientOriginalExtension(), 85);
 
             // move uploaded file from temp to uploads directory
             if (Storage::disk(config('voyager.storage.disk'))->put($fullPath, (string) $image, 'public')) {

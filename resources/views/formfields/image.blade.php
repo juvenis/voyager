@@ -7,3 +7,4 @@
     </div>
 @endif
 <input @if($row->required == 1 && !isset($dataTypeContent->{$row->field})) required @endif type="file" name="{{ $row->field }}" accept="image/*">
+<input type="hidden" name="image_exists" value="{{ Voyager::image($dataTypeContent->{$row->field}) ? 1 : 0 }}">

@@ -14,6 +14,7 @@ class User extends Authenticatable implements UserContract
     protected $guarded = [];
 
     protected $casts = [
+        'email_verified_at' => 'datetime',
         'settings' => 'array',
     ];
 
@@ -38,6 +39,6 @@ class User extends Authenticatable implements UserContract
 
     public function getLocaleAttribute()
     {
-        return $this->settings['locale'];
+        return collect($this->settings)->get('locale');
     }
 }
